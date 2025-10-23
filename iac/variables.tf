@@ -13,7 +13,7 @@ variable "project_name" {
 variable "cluster_version" {
   description = "Versão do Kubernetes"
   type        = string
-  default     = "1.28"
+  default     = "1.33"
 }
 
 variable "node_instance_types" {
