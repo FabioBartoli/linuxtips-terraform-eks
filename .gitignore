@@ -1,0 +1,46 @@
+# Arquivos locais do Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Arquivos de variáveis com valores sensíveis
+*.tfvars
+!*.tfvars.example
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Arquivos de backup
+*.backup
+*.bak
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.production
+.env.staging
+
+# Arquivos de saída
+output/
+build/
+dist/
+
+# Arquivos específicos do kubectl
+kubeconfig
+
+
