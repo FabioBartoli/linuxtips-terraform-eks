@@ -10,7 +10,7 @@ resource "helm_release" "istio_base" {
 
   depends_on = [
     aws_eks_cluster.main,
-    aws_eks_node_group.main
+    aws_eks_access_policy_association.github_oidc_role_admin
   ]
 }
 
@@ -34,9 +34,14 @@ resource "helm_release" "istiod" {
     value = "true"
   }
 
+  set {
+    name  = "pilot.pdb.enabled"
+    value = "false"
+  }
+
   depends_on = [
     helm_release.istio_base,
     aws_eks_cluster.main,
-    aws_eks_node_group.main
+    aws_eks_access_policy_association.github_oidc_role_admin
   ]
 }

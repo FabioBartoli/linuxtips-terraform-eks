@@ -13,7 +13,7 @@ variable "project_name" {
 variable "cluster_version" {
   description = "Versão do Kubernetes"
   type        = string
-  default     = "1.28"
+  default     = "1.33"
 }
 
 variable "node_instance_types" {
@@ -87,18 +87,86 @@ variable "common_tags" {
   }
 }
 
-locals {
-  vpc_id = data.aws_ssm_parameter.vpc_id.value
-  
-  public_subnet_ids = [
-    data.aws_ssm_parameter.public_subnet_1a.value,
-    data.aws_ssm_parameter.public_subnet_1b.value,
-    data.aws_ssm_parameter.public_subnet_1c.value
-  ]
-  
-  private_subnet_ids = [
-    data.aws_ssm_parameter.private_subnet_1a.value,
-    data.aws_ssm_parameter.private_subnet_1b.value,
-    data.aws_ssm_parameter.private_subnet_1c.value
-  ]
+variable "addon_cni_version" {
+  description = "Versão do Addon VPC CNI"
+  type        = string
+  default     = "v1.19.5-eksbuild.1"
+}
+
+variable "addon_coredns_version" {
+  description = "Versão do Addon CoreDNS"
+  type        = string
+  default     = "v1.12.1-eksbuild.2"
+}
+
+variable "addon_kubeproxy_version" {
+  description = "Versão do Addon Kube Proxy"
+  type        = string
+  default     = "v1.33.0-eksbuild.2"
+}
+
+variable "addon_pod_identity_version" {
+  description = "Versão do Addon EKS Pod Identity Agent"
+  type        = string
+  default     = "v1.3.8-eksbuild.2"
+}
+
+variable "addon_ebs_csi_version" {
+  description = "Versão do Addon EBS CSI Driver"
+  type        = string
+  default     = "v1.46.0-eksbuild.1"
+}
+
+variable "addon_efs_csi_version" {
+  description = "Versão do Addon EFS CSI Driver"
+  type        = string
+  default     = "v2.1.10-eksbuild.1"
+}
+
+variable "addon_s3_csi_version" {
+  description = "Versão do Addon S3 CSI Driver"
+  type        = string
+  default     = "v1.15.0-eksbuild.1"
+}
+
+variable "auto_scale_options" {
+  type = object({
+    min     = number
+    max     = number
+    desired = number
+  })
+  default = {
+    min     = 1
+    max     = 2
+    desired = 2
+  }
+}
+
+variable "custom_ami" {
+  type        = string
+  description = "AMI ID dos nodes"
+  default     = "ami-03a82ff046da70392"
+}
+
+variable "nodes_instance_sizes" {
+  type = list(string)
+  default = ["t3.medium"]
+}
+
+variable "ssm_public_subnets" {
+  type        = list(string)
+  description = "description"
+  default = [ "/linuxtips/vpc/public-subnet-1a", "/linuxtips/vpc/public-subnet-1b", "/linuxtips/vpc/public-subnet-1c" ]
+}
+
+variable "ssm_private_subnets" {
+  type        = list(string)
+  description = "description"
+  default = [ "/linuxtips/vpc/private-subnet-1a", "/linuxtips/vpc/private-subnet-1b", "/linuxtips/vpc/private-subnet-1c" ]
+}
+
+variable "ssm_vpc" {
+  type        = string
+  description = "description"
+  default     = "/linuxtips/vpc/id"
 }

@@ -47,13 +47,12 @@ resource "helm_release" "argocd" {
     value = "https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.6/extension.tar"
   }
 
-  # Referencia o arquivo de values
   values = [
     file("${path.module}/files/argocd-values.yml")
   ]
 
   depends_on = [
     aws_eks_cluster.main,
-    aws_eks_node_group.main
+    aws_eks_access_policy_association.github_oidc_role_admin
   ]
 }

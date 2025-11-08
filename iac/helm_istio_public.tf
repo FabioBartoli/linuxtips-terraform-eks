@@ -42,7 +42,6 @@ resource "helm_release" "istio_ingress" {
     value = var.istio_cpu_threshold
   }
 
-  # Configuração de recursos para o Istio Ingress Gateway
   set {
     name  = "resources.requests.cpu"
     value = "100m"
@@ -65,7 +64,9 @@ resource "helm_release" "istio_ingress" {
 
   depends_on = [
     helm_release.istio_base,
-    helm_release.istiod
+    helm_release.istiod,
+    aws_eks_node_group.main,
+    aws_eks_access_policy_association.github_oidc_role_admin
   ]
 }
 
@@ -86,8 +87,6 @@ YAML
   depends_on = [
     helm_release.istio_ingress,
     aws_eks_cluster.main,
-    aws_eks_node_group.main,
-    aws_lb_target_group.main,
-    helm_release.alb_ingress_controller
+    aws_eks_access_policy_association.github_oidc_role_admin
   ]
 }

@@ -3,17 +3,16 @@ global:
 
 configs:
   params:
-    server.insecure: "false"
+    server.insecure: "true"
 
   cm:
     url: https://argocd.fabiobartoli.com.br
-
-  accounts:
-    linuxtips: login
+    accounts.linuxtips: apiKey, login
 
   secret:
     extra:
-      accounts.linuxtips.password: eolhasoein
+      accounts.linuxtips.password: "$2b$10$xXbxM1IXskd5BPf4YepSMuvGRvI7pXxvhleiiLin.keUV1jFLhO9G"
+      accounts.linuxtips.passwordMtime: "2025-11-07T18:45:00Z"
 
   rbac:
     policy.default: role:readonly
@@ -28,7 +27,6 @@ server:
   ingress:
     enabled: false
 
-  # Configuração de recursos para o ArgoCD
   resources:
     requests:
       cpu: 100m

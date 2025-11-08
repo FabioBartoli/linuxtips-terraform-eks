@@ -5,7 +5,7 @@ resource "aws_lb" "ingress" {
   internal           = false
   load_balancer_type = "network"
 
-  subnets = local.public_subnet_ids
+  subnets = data.aws_ssm_parameter.public_subnets[*].value
 
   enable_cross_zone_load_balancing = true
   enable_deletion_protection       = false
@@ -20,7 +20,7 @@ resource "aws_lb_target_group" "main" {
   name     = format("%s-https", aws_lb.ingress.name)
   port     = 31257
   protocol = "TCP"
-  vpc_id   = data.aws_ssm_parameter.vpc_id.value
+  vpc_id   = data.aws_ssm_parameter.vpc.value
 }
 
 resource "aws_lb_listener" "main_public" {

@@ -1,3 +1,8 @@
+output "cluster_id" {
+  description = "ID do cluster EKS"
+  value       = aws_eks_cluster.main.id
+}
+
 output "cluster_name" {
   description = "Nome do cluster EKS"
   value       = aws_eks_cluster.main.name
@@ -8,24 +13,22 @@ output "cluster_endpoint" {
   value       = aws_eks_cluster.main.endpoint
 }
 
-output "cluster_arn" {
-  description = "ARN do cluster EKS"
-  value       = aws_eks_cluster.main.arn
+output "cluster_certificate_authority_data" {
+  description = "Certificate authority data do cluster"
+  value       = aws_eks_cluster.main.certificate_authority[0].data
 }
 
-output "cluster_version" {
-  description = "Versão do cluster EKS"
-  value       = aws_eks_cluster.main.version
+output "cluster_oidc_issuer_url" {
+  description = "URL do OIDC issuer do cluster"
+  value       = aws_eks_cluster.main.identity[0].oidc[0].issuer
 }
 
-output "node_group_name" {
-  description = "Nome do node group"
-  value       = aws_eks_node_group.main.node_group_name
+output "cluster_oidc_provider_arn" {
+  description = "ARN do OIDC provider do cluster"
+  value       = aws_iam_openid_connect_provider.eks.arn
 }
 
-output "node_group_arn" {
-  description = "ARN do node group"
-  value       = aws_eks_node_group.main.arn
+output "cluster_role_arn" {
+  description = "ARN da role do cluster EKS"
+  value       = aws_iam_role.eks_cluster_role.arn
 }
-
-

@@ -5,12 +5,9 @@ resource "helm_release" "alb_ingress_controller" {
   namespace        = "kube-system"
   create_namespace = true
 
-  wait    = true
-  timeout = 600
-
   set {
     name  = "clusterName"
-    value = aws_eks_cluster.main.name
+    value = var.project_name
   }
 
   set {
@@ -33,16 +30,15 @@ resource "helm_release" "alb_ingress_controller" {
     value = var.aws_region
   }
 
+
   set {
     name  = "vpcId"
-    value = local.vpc_id
+    value = data.aws_ssm_parameter.vpc.value
+
   }
 
   depends_on = [
     aws_eks_cluster.main,
-    aws_eks_node_group.main,
-    aws_iam_role.aws_lb_controller,
-    aws_iam_policy_attachment.aws_lb_policy,
-    aws_iam_openid_connect_provider.eks
+    aws_eks_access_policy_association.github_oidc_role_admin
   ]
 }
