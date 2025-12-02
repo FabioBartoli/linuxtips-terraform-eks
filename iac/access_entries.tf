@@ -35,7 +35,7 @@ resource "aws_eks_access_policy_association" "github_oidc_role_admin" {
 
 resource "aws_eks_access_policy_association" "svc_github_user_admin" {
   cluster_name  = aws_eks_cluster.main.id
-  principal_arn = aws_eks_access_entry.svc_github_user.principal_arn
+  principal_arn = aws_eks_access_entry.svc_user.principal_arn
 
   policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 
@@ -43,5 +43,5 @@ resource "aws_eks_access_policy_association" "svc_github_user_admin" {
     type = "cluster"
   }
 
-  depends_on = [aws_eks_access_entry.svc_github_user]
+  depends_on = [aws_eks_access_entry.svc_user]
 }
