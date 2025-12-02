@@ -42,6 +42,7 @@ resource "helm_release" "istiod" {
   depends_on = [
     helm_release.istio_base,
     aws_eks_cluster.main,
-    aws_eks_access_policy_association.github_oidc_role_admin
+    aws_eks_access_policy_association.github_oidc_role_admin,
+    helm_release.alb_ingress_controller
   ]
 }
